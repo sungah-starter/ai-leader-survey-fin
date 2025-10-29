@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 협업 리더 역량 진단 설문 (자동 발송 시뮬레이션)</title>
+    <title>AI 협업 리더 역량 진단 설문 </title>
     
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
@@ -53,7 +53,7 @@
             text-align: center;
             margin: 0.25rem; 
             
-            /* 요청에 따라 배경색, 테두리, 그림자 완전히 제거 */
+            /* 배경색, 테두리, 그림자 완전히 제거 */
             border: none;
             background-color: transparent;
             box-shadow: none;
@@ -198,12 +198,10 @@
     </div>
 
     <script>
-        // 발송 대상 이메일 주소 (요청하신 주소)
-        const TARGET_EMAIL = 'sungah.lim@multicampus.com';
-        // 가상의 API 엔드포인트 (실제 환경에서 백엔드 주소로 변경 필요)
-        const API_ENDPOINT = '/api/sendEmail'; 
+        // 🚨 Google Apps Script 
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxoq8sGiwGzsPle7r_oyZbElLP78J2OJO3g_gp4_-Fpa1l_eoFXug9CGKGWVA1EqlQj1g/exec'; 
         
-        // 설문 문항 데이터 정의 (이전 버전과 동일)
+        // 설문 문항 데이터 정의
         const surveyData = [
             {
                 id: 'I',
@@ -224,9 +222,9 @@
                 questions: [
                     "우리 팀의 핵심 업무가 조직에 제공하는 궁극적인 가치가 무엇인지 명확히 이해하고 있다.",
                     "팀의 핵심 업무 프로세스를 시작부터 끝까지 주요 단계별로 머릿속에 명확히 그릴 수 있다.",
-                    "팀의 업무 흐름을 '로직 트리'나 '플로우 차트'와 같은 분석 기법을 활용하여 체계적으로 분석해 본 경험이 충분하다.",
-                    "현재 팀 프로세스의 각 단계에서 AI 협업이 가능한 구체적인 포인트를 상상해 본 적이 있다.",
-                    "팀원들의 비공식 AI 도구 사용 (Shadow AI) 상황을 인지하고, 정보 보안 관점에서 가이드라인을 모색 중이다.",
+                    "팀의 업무 흐름을 '로직 트리'나 '플로우 차트'와 같은 분석 기법을 활용하여 체계적으로 분석해 본 경험이 다수 있다.",
+                    "현재 팀 업무 프로세스의 각 단계에서 AI 협업이 가능한 구체적인 포인트를 상상해 본 적이 있다.",
+                    "팀원들의 비공식 AI 도구 사용(Shadow AI)으로 인한 정보 유출 및 보안 위험을 인식하고 있다.", 
                     "팀 업무에 활용되는 데이터가 AI 도구가 활용하기 좋은 형태로 정제되고 구조화되어 있다고 생각한다.",
                     "팀원들이 업무 중 AI 활용에 대해 자유롭게 공유하고 피드백을 주고받는 분위기를 장려하고 있다."
                 ]
@@ -239,13 +237,13 @@
                     "AI가 팀원들의 업무 역할과 책임을 변화시키고 새로운 가치 창출 기회를 만들 것이라고 예상한다.",
                     "우리 팀이 AI를 활용하여 가장 먼저 변화시키고 싶은 업무 영역에 대한 우선순위는 가지고 있다.",
                     "AI 시대에 팀원들에게 필요한 새로운 협업 방식이나 역량 (예: 프롬프트 활용)에 대해 고민하고 있다.",
-                    "팀원들이 AI 활용을 실패하더라도 시도와 실험을 장려하는 심리적 안전지대를 제공할 의지가 있다.",
+                    "AI 활용 시 데이터의 편향성, 결과의 책임, 윤리적 기준 등 책임 있는 활용 원칙을 고민하고 있다.", 
                     "AI 활용 증가로 인해 발생하는 업무 결과물에 대한 평가 기준 변화에 대해 유연하게 대처할 준비가 되어 있다."
                 ]
             }
         ];
 
-        // 점수대별 진단 해설 데이터 (이전 버전과 동일)
+        // 점수대별 진단 해설 데이터
         const feedbackData = {
             'I': {
                 high: { title: '✨ AI 선도 학습자', message: '✅ <b>현재 상태:</b> AI에 대한 관심과 학습 동기가 매우 높고, 개인적인 활용 경험도 풍부합니다. 기술 변화에 대한 심리적 장벽이 낮아 새로운 도전을 즐길 준비가 되어 있습니다. \n\n🚀 <b>성장 방향:</b> 리더님의 높은 기술 이해도를 <b>팀 단위의 워크플로우 분석</b>과 <b>전략적 역할 재정의</b>로 확장하는 데 집중하십시오. 교육 과정에서 <b>실행 전략 수립</b>에 깊이를 더해 팀을 선도할 수 있습니다.' },
@@ -253,14 +251,14 @@
                 low: { title: '🌱 AI 경험 초기 단계', message: '✅ <b>현재 상태:</b> AI 기술에 대한 막연한 거리감이 있거나, 개인적 활용 및 학습 시도가 부족한 상태입니다. AI를 어떻게 시작해야 할지, 리더로서 무엇부터 배워야 할지 고민이 많은 단계입니다. \n\n🎯 <b>성장 방향:</b> AI를 경쟁자가 아닌 <b>협업 파트너</b>로 받아들이는 <b>인식 전환</b>이 가장 시급합니다. 교육의 <b>1단계(AI를 알아야 하는 이유)</b>에 집중하여, 리더로서 AI 활용의 <b>당위성과 안전한 사용법</b>을 먼저 습득하고 학습의 기초를 다지도록 독려합니다.' }
             },
             'II': {
-                high: { title: '🗺️ 프로세스 통찰 리더', message: '✅ <b>현재 상태:</b> 팀의 핵심 업무 가치와 AS-IS 프로세스에 대한 명확한 통찰력을 가지고 있습니다. Shadow AI와 데이터 환경에 대한 인식도 높아 AI 도입 기반이 탄탄합니다. \n\n🚀 <b>성장 방향:</b> 이미 분석 기반이 탄탄하므로, 교육의 <b>2단계(워크플로우 분석)</b>를 통해 <b>단계별 AI 협업 기회</b>를 바로 구체화하고 <b>가장 큰 혁신 효과</b>를 낼 수 있는 포인트를 발굴하는 데 집중하십시오. 발견된 기회를 빠르게 실행하는 데 집중해 주세요.' },
-                mid: { title: '📝 프로세스 진단 강화 필요', message: '✅ <b>현재 상태:</b> 업무는 이해하지만, 프로세스 진단(로직 트리 등) 경험이 부족하고, AI 도입을 위한 데이터 및 보안 환경에 대한 고민이 진행 중인 단계입니다. \n\n💪 <b>성장 방향:</b> 교육의 <b>2단계(워크플로우 분석)</b>에서 제시하는 <b>체계적인 로직 트리 분석 방법론</b>을 습득하여, 머릿속의 프로세스를 <b>객관화</b>하고 <b>AI 협업 기회를 정량적으로 탐색</b>하는 역량을 강화하는 데 집중하십시오.' },
-                low: { title: '🧭 업무 본질 인식 재정립', message: '✅ <b>현재 상태:</b> 팀 업무의 핵심 가치 정의가 모호하고, 현재 워크플로우를 체계적으로 진단해 본 경험이 부족한 상태입니다. AI 도입 이전에 팀의 근본적인 문제점을 파악하는 것이 필요합니다. \n\n🎯 <b>성장 방향:</b> 교육의 <b>2단계</b>에 <b>가장 적극적으로 참여</b>하여 <b>AS-IS 프로세스를 재정의</b>하고, <b>팀이 창출하는 궁극적인 가치</b>를 명확히 하는 방법을 배우는 데 집중해야 합니다. 혁신의 첫 단추를 끼우는 과정에 몰입해 주세요.' }
+                high: { title: '🗺️ 프로세스 통찰 리더', message: '✅ <b>현재 상태:</b> 팀의 핵심 업무 가치와 AS-IS 프로세스에 대한 명확한 통찰력을 가지고 있으며, Shadow AI 보안 위험 인식 수준도 높습니다. AI 도입 기반이 탄탄합니다. \n\n🚀 <b>성장 방향:</b> 이미 분석 기반이 탄탄하므로, 교육의 <b>2단계(워크플로우 분석)</b>를 통해 <b>단계별 AI 협업 기회</b>를 바로 구체화하고 <b>가장 큰 혁신 효과</b>를 낼 수 있는 포인트를 발굴하는 데 집중하십시오. 발견된 기회를 빠르게 실행하는 데 집중해 주세요. ' },
+                mid: { title: '📝 프로세스 진단 강화 필요', message: '✅ <b>현재 상태:</b> 업무는 이해하지만, 프로세스 진단(로직 트리 등) 경험이 부족하고, Shadow AI로 인한 보안 위험에 대한 인식이 보통 수준입니다. \n\n💪 <b>성장 방향:</b> 교육의 <b>2단계(워크플로우 분석)</b>에서 제시하는 체계적인 로직 트리 분석 방법론을 습득하여, 머릿속의 프로세스를 <b>객관화</b>하고 <b>AI 협업 기회를 정량적으로 탐색</b>하는 역량을 강화하는 데 집중하십시오. AI 도입 전 보안 및 리스크 관리도 함께 점검해야 합니다.' },
+                low: { title: '🧭 업무 본질 인식 재정립', message: '✅ <b>현재 상태:</b> 팀 업무의 핵심 가치 정의가 모호하고, 워크플로우 진단 경험이 부족하며, Shadow AI의 위험성에 대한 인식이 낮습니다. AI 도입 이전에 팀의 근본적인 문제점 파악과 리스크 관리가 필요합니다. \n\n🎯 <b>성장 방향:</b> 교육의 <b>2단계</b>에 <b>가장 적극적으로 참여</b>하여 <b>AS-IS 프로세스를 재정의</b>하고, 정보 보안 관점에서 AI 활용의 안전성을 확보하는 방법을 배우는 데 집중해야 합니다. 혁신의 첫 단추를 끼우는 과정에 몰입해 주세요.' }
             },
             'III': {
-                high: { title: '👑 미래 변화 주도 리더', message: '✅ <b>현재 상태:</b> AI가 가져올 변화의 파급력을 믿고 있으며, 팀원의 육성, 실험적 문화 지원, 평가 기준 변화에 대한 인식과 의지가 확고합니다. 변화를 이끌 준비가 되어 있습니다. \n\n🚀 <b>성장 방향:</b> 교육의 <b>3, 4단계(재설계 및 역할 재정의)</b>를 통해 리더님의 강력한 의지를 <b>실질적인 변화 관리 전략</b>과 <b>AI 시대에 맞는 팀 운영 모델</b>로 최적화하십시오. <b>롤 모델</b>으로서의 역할을 완성하는 데 집중해 주세요.' },
-                mid: { title: '🤝 역할 변화 고민 단계', message: '✅ <b>현재 상태:</b> AI의 영향력은 인지하지만, 팀원들의 새로운 역량 육성, 평가 기준 변화, 실험 문화 조성에 대한 <b>구체적인 지원 방안</b>에 대한 고민은 진행 중인 단계입니다. \n\n💪 <b>성장 방향:</b> AI 시대 리더의 역할은 \'촉진자/지원자\'입니다. 교육의 <b>4단계(리더의 역할 재정의)</b>를 통해 <b>팀원들의 자발적 AI 활용</b>을 이끌어낼 수 있는 <b>실질적인 지원 전략</b>과 <b>유연한 평가 기준</b> 설정 방안을 모색하는 데 집중하십시오.' },
-                low: { title: '🔄 리더십 관점 전환 필수', message: '✅ <b>현재 상태:</b> AI가 업무 프로세스 자체를 바꾼다는 믿음이 약하며, 변화 관리 및 팀 지원에 대한 의지가 낮은 상태입니다. 새로운 기술에 대한 리더십 관점 전환이 필요합니다. \n\n🎯 <b>성장 방향:</b> AI는 단순히 \'업무 개선\'을 넘어 \'업무 재설계\'를 요구합니다. 교육의 <b>3단계(재설계)</b>와 <b>4단계(역할 재정의)</b>에서 제시하는 <b>AI 시대의 새로운 리더십 관점</b>을 반드시 내재화하고, 변화를 주도하는 첫 걸음을 내딛는 데 집중해 주세요.' }
+                high: { title: '👑 미래 변화 주도 리더', message: '✅ <b>현재 상태:</b> AI가 가져올 변화의 파급력을 믿고 있으며, 윤리적 활용 원칙 수립, 팀원의 육성, 평가 기준 변화에 대한 인식과 의지가 확고합니다. 변화를 이끌 준비가 되어 있습니다. \n\n🚀 <b>성장 방향:</b> 교육의 <b>3, 4단계(재설계 및 역할 재정의)</b>를 통해 리더님의 강력한 의지를 실질적인 변화 관리 전략과 책임 있는 AI 시대 팀 운영 모델로 최적화하십시오. <b>롤 모델</b>로서의 역할을 완성하는 데 집중해 주세요.' },
+                mid: { title: '🤝 역할 변화 고민 단계', message: '✅ <b>현재 상태:</b> AI의 영향력은 인지하지만, 윤리적 책임, 데이터 편향성 관리 등 리더로서의 책임 있는 AI 활용 원칙에 대한 구체적인 고민은 진행 중인 단계입니다. \n\n💪 <b>성장 방향:</b> AI 시대 리더의 역할은 \'촉진자/지원자\'입니다. 교육의 <b>4단계(리더의 역할 재정의)</b>를 통해 윤리적 AI 활용을 위한 가이드라인을 수립하고, 팀원들이 <b>AI 활용 결과에 대해 비판적으로 판단</b>하도록 이끌 수 있는 리더십 역량을 확보하는 데 집중하십시오.' },
+                low: { title: '🔄 리더십 관점 전환 필수', message: '✅ <b>현재 상태:</b> AI가 업무 프로세스 자체를 바꾼다는 믿음이 약하며, AI 윤리와 책임에 대한 인식이 낮은 상태입니다. 새로운 기술에 대한 리더십 관점 전환이 필요합니다. \n\n🎯 <b>성장 방향:</b> AI는 단순히 \'업무 개선\'을 넘어 \'업무 재설계\'를 요구하며, 이는 윤리적 책임 없이는 지속 가능하지 않습니다. 교육의 <b>3단계(재설계)</b>와 <b>4단계(역할 재정의)</b>에서 제시하는 AI 시대의 새로운 리더십 관점을 반드시 내재화하고, 책임감 있는 변화를 주도하는 첫 걸음을 내딛는 데 집중해 주세요.' }
             }
         };
 
@@ -278,100 +276,7 @@
         let userResponses = []; // 응답 내용을 저장할 배열
 
         // -------------------------------------------------------------------------
-        // 이메일 발송 시뮬레이션 기능 (백엔드 필요)
-        // -------------------------------------------------------------------------
-
-        // 응답 내용과 진단 결과를 HTML 포맷의 메일 본문으로 생성
-        function formatResultsForEmail(results, userResponses) {
-            const areaTitles = { 'I': '개인 AI 역량', 'II': '팀 업무 인식', 'III': '리더십 방향성' };
-            let emailBody = '<h1>AI 협업 리더 역량 진단 결과 보고서</h1>';
-            emailBody += `<p><strong>발송일시:</strong> ${new Date().toLocaleString('ko-KR')}</p><hr>`;
-            
-            // 1. 종합 요약
-            emailBody += '<h2>1. 종합 진단 요약</h2>';
-            for (const areaId in results) {
-                const res = results[areaId];
-                emailBody += `<p><strong>${areaTitles[areaId]}:</strong> 평균 ${res.average}점 / ${res.levelInfo.name} (${res.feedback.title})</p>`;
-            }
-            emailBody += '<hr>';
-
-            // 2. 상세 진단 해설
-            emailBody += '<h2>2. 상세 진단 해설 및 성장 방향</h2>';
-            for (const areaId in results) {
-                const res = results[areaId];
-                emailBody += `
-                    <h3>[${areaTitles[areaId]}]</h3>
-                    <h4>${res.feedback.title}</h4>
-                    <p>${res.feedback.message.replace(/\n/g, '<br>')}</p>
-                    <br>
-                `;
-            }
-            emailBody += '<hr>';
-
-            // 3. 문항별 응답 내용 (디버깅/기록용)
-            emailBody += '<h2>3. 문항별 응답 내용</h2><ul>';
-            userResponses.forEach(res => {
-                emailBody += `<li>[${res.area}, Q${res.index}] ${res.content}: <strong>${res.score}점</strong></li>`;
-            });
-            emailBody += '</ul>';
-
-            return emailBody;
-        }
-
-        // API 호출을 시뮬레이션하고 결과를 발송하는 함수
-        async function sendResultsViaApiSimulation(results, userResponses) {
-            const body = formatResultsForEmail(results, userResponses);
-            const subject = `[AI 리더 역량 진단] 최종 결과 보고서 (${new Date().toLocaleDateString('ko-KR')})`;
-            
-            // UI를 업데이트하여 발송 중임을 표시
-            statusMessage.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'bg-green-100', 'text-green-800');
-            statusMessage.classList.add('bg-amber-100', 'text-amber-800');
-            statusMessage.innerHTML = '<span class="animate-pulse">📤</span> 진단 결과를 서버로 전송 중입니다... (실제 발송까지 약 3초 소요)';
-            document.getElementById('submitButton').disabled = true;
-
-            const payload = {
-                to: TARGET_EMAIL,
-                subject: subject,
-                htmlBody: body,
-                // 응답자 정보는 현재 설문지에 없으므로 비워둠
-            };
-
-            try {
-                // 실제 API 호출 대신 3초 지연 시뮬레이션
-                await new Promise(resolve => setTimeout(resolve, 3000));
-                
-                // --- 실제 서버 연동 시 아래 fetch 코드를 사용해야 함 ---
-                /* const response = await fetch(API_ENDPOINT, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Server responded with an error');
-                }
-                */
-                // ----------------------------------------------------
-
-                // 성공 시 UI 업데이트
-                statusMessage.classList.remove('bg-amber-100', 'text-amber-800');
-                statusMessage.classList.add('bg-emerald-100', 'text-emerald-800');
-                statusMessage.innerHTML = `✅ 진단 결과가 **${TARGET_EMAIL}** 주소로 성공적으로 전송되었습니다.`;
-                console.log("Simulated Email Payload:", payload); // 콘솔에 발송 내용 기록
-
-            } catch (error) {
-                // 실패 시 UI 업데이트
-                statusMessage.classList.remove('bg-amber-100', 'text-amber-800');
-                statusMessage.classList.add('bg-red-100', 'text-red-800');
-                statusMessage.innerHTML = `❌ 발송 실패: 서버 통신에 오류가 발생했습니다. (실제 환경에서는 백엔드 API 설정이 필요합니다.)`;
-                console.error("Email Sending Simulation Failed:", error);
-
-            } finally {
-                document.getElementById('submitButton').disabled = false;
-                // 결과 표시 (발송 성공/실패 여부와 관계없이 진단 결과는 보여줘야 함)
-                displayResults(results);
-            }
-        }
+        // Google Sheets 연동 API 호출 함수
         // -------------------------------------------------------------------------
 
         // 레벨 문자열을 반환하는 헬퍼 함수
@@ -384,6 +289,75 @@
                 return { level: 1, name: "Level 1 (기반 정립)" };
             }
         }
+
+        // API 전송용 페이로드 생성
+        function createPayload(results, userResponses) {
+            const responsesMap = {};
+            userResponses.forEach(res => {
+                responsesMap['Q' + res.index] = res.score;
+            });
+
+            return {
+                responses: responsesMap,
+                averages: {
+                    I: results.I.average,
+                    II: results.II.average,
+                    III: results.III.average
+                }
+            };
+        }
+
+        // Google Apps Script API 호출을 시뮬레이션하고 결과를 전송하는 함수
+        async function sendResultsToSheets(results, userResponses) {
+            if (APPS_SCRIPT_URL === 'YOUR_DEPLOYED_WEB_APP_URL') {
+                statusMessage.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800');
+                statusMessage.classList.add('bg-red-100', 'text-red-800');
+                statusMessage.innerHTML = '🚨 오류: Google Apps Script URL을 업데이트하지 않았습니다. Sheets 연동이 불가능합니다.';
+                return;
+            }
+
+            const payload = createPayload(results, userResponses);
+            
+            // UI를 업데이트하여 전송 중임을 표시
+            statusMessage.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'bg-emerald-100', 'text-emerald-800');
+            statusMessage.classList.add('bg-amber-100', 'text-amber-800');
+            statusMessage.innerHTML = '<span class="animate-pulse">📝</span> 설문 결과를 Google Sheets에 기록 중입니다...';
+            document.getElementById('submitButton').disabled = true;
+
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
+                    // Apps Script는 일반적으로 x-www-form-urlencoded 또는 텍스트 데이터를 선호하지만, 
+                    // JSON을 사용하려면 Apps Script에서 e.postData.contents를 JSON.parse() 해야 합니다.
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    // 성공 시 UI 업데이트
+                    statusMessage.classList.remove('bg-amber-100', 'text-amber-800');
+                    statusMessage.classList.add('bg-emerald-100', 'text-emerald-800');
+                    statusMessage.innerHTML = `✅ 진단 결과가 Google Sheets에 성공적으로 기록되었습니다.`;
+                } else {
+                    throw new Error(result.error || 'Server responded with an error');
+                }
+
+            } catch (error) {
+                // 실패 시 UI 업데이트
+                statusMessage.classList.remove('bg-amber-100', 'text-amber-800');
+                statusMessage.classList.add('bg-red-100', 'text-red-800');
+                statusMessage.innerHTML = `❌ 기록 실패: Google Sheets로 데이터를 전송하지 못했습니다. (오류: ${error.message})`;
+                console.error("Sheets Submission Failed:", error);
+
+            } finally {
+                document.getElementById('submitButton').disabled = false;
+                // 결과 표시 (전송 성공/실패 여부와 관계없이 진단 결과는 보여줘야 함)
+                displayResults(results);
+            }
+        }
+        // -------------------------------------------------------------------------
 
 
         // 1. 설문 문항 동적 생성 함수
@@ -525,14 +499,14 @@
 
             currentResults = results; // 결과를 전역 변수에 저장
 
-            // --- API 발송 시뮬레이션 호출 ---
-            sendResultsViaApiSimulation(results, userResponses); 
+            // --- Google Sheets API 호출 ---
+            sendResultsToSheets(results, userResponses); 
             // -----------------------------
             
-            // UI를 즉시 숨기지 않고, 발송 완료/실패 후 displayResults가 호출되도록 함.
+            // 결과 표시는 Sheets 전송 성공/실패와 관계없이 sendResultsToSheets 내부에서 호출됨.
         }
 
-        // 3. 결과 표시 함수 (API 호출의 마지막 단계에서 호출됨)
+        // 3. 결과 표시 함수 (Sheets API 호출의 마지막 단계에서 호출됨)
         function displayResults(results) {
             scoreSummary.innerHTML = '';
             feedbackDetails.innerHTML = '';
@@ -548,18 +522,18 @@
                 const result = results[areaId];
                 const card = document.createElement('div');
                 
-                // 레벨 색상 설정 (Level 3: Green, Level 2: Yellow, Level 1: Red)
-                let levelColor = 'text-gray-500'; // 기본값
+                // 레벨 색상 설정
+                let levelColor = 'text-gray-500'; 
                 let levelBg = 'bg-gray-100';
                 
                 if (result.levelInfo.level === 3) {
-                    levelColor = 'text-emerald-600'; // Level 3: 변화 주도 (녹색 계열)
+                    levelColor = 'text-emerald-600'; 
                     levelBg = 'bg-emerald-50';
                 } else if (result.levelInfo.level === 2) {
-                    levelColor = 'text-amber-600'; // Level 2: 활용 확장 (노랑/주황 계열)
+                    levelColor = 'text-amber-600'; 
                     levelBg = 'bg-amber-50';
                 } else {
-                    levelColor = 'text-rose-600'; // Level 1: 기반 정립 (빨강 계열)
+                    levelColor = 'text-rose-600'; 
                     levelBg = 'bg-rose-50';
                 }
 
