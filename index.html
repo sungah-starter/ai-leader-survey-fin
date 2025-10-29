@@ -321,34 +321,30 @@
             // UI를 업데이트하여 전송 중임을 표시
             statusMessage.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'bg-emerald-100', 'text-emerald-800');
             statusMessage.classList.add('bg-amber-100', 'text-amber-800');
-            statusMessage.innerHTML = '<span class="animate-pulse">📝</span> 설문 결과를 Google Sheets에 기록 중입니다...';
+            statusMessage.innerHTML = '<span class="animate-pulse">📝</span> 결과를 분석 중입니다...';
             document.getElementById('submitButton').disabled = true;
 
-            try {
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
-                    // Apps Script는 일반적으로 x-www-form-urlencoded 또는 텍스트 데이터를 선호하지만, 
-                    // JSON을 사용하려면 Apps Script에서 e.postData.contents를 JSON.parse() 해야 합니다.
-                    body: JSON.stringify(payload)
-                });
-                
-                const result = await response.json();
-
-                if (response.ok && result.success) {
-                    // 성공 시 UI 업데이트
-                    statusMessage.classList.remove('bg-amber-100', 'text-amber-800');
-                    statusMessage.classList.add('bg-emerald-100', 'text-emerald-800');
-                    statusMessage.innerHTML = `✅ 진단 결과가 Google Sheets에 성공적으로 기록되었습니다.`;
-                } else {
-                    throw new Error(result.error || 'Server responded with an error');
-                }
-
-            } catch (error) {
+try {
+    const response = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        mode: 'no-cors', // CORS 문제 방지
+        body: JSON.stringify(payload)
+    });
+    
+    // mode: 'no-cors' 사용 시 response를 확인할 수 없으므로
+    // 성공했다고 가정하고 진행
+    statusMessage.classList.remove('bg-amber-100', 'text-amber-800');
+    statusMessage.classList.add('bg-emerald-100', 'text-emerald-800');
+    statusMessage.innerHTML = `✅ 진단 결과가 전송되었습니다.`;
+    
+    displayResults(results);
+    
+} catch (error) {
                 // 실패 시 UI 업데이트
                 statusMessage.classList.remove('bg-amber-100', 'text-amber-800');
                 statusMessage.classList.add('bg-red-100', 'text-red-800');
-                statusMessage.innerHTML = `❌ 기록 실패: Google Sheets로 데이터를 전송하지 못했습니다. (오류: ${error.message})`;
+                statusMessage.innerHTML = `❌ 응답 실패: 데이터를 전송하지 못했습니다. (오류: ${error.message})`;
                 console.error("Sheets Submission Failed:", error);
 
             } finally {
@@ -621,4 +617,5 @@
     </script>
 </body>
 </html>
+
 
